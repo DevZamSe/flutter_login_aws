@@ -21,6 +21,9 @@ class _LoginPageState extends State<LoginPage> {
 
   _submit(){
     _formKey.currentState.validate();
+    if(_formKey.currentState.validate()){
+      Navigator.pushNamed(context, 'menu');
+    }
   }
 
   @override
@@ -111,15 +114,13 @@ class _LoginPageState extends State<LoginPage> {
                             SizedBox(height: size.height*0.08),
                             ConstrainedBox(
                               constraints: BoxConstraints(
-                                  maxWidth: 300,
-                                  minWidth: 300
+                                  maxWidth: 300
                               ),
                               child: _boton(size)
                             ),
                             SizedBox(height: 10),
                             _textoRegistro(),
                             SizedBox(height: size.height*0.1)
-
                           ],
                         )
                       ],
@@ -160,14 +161,21 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _boton(Size size){
-    final boton = Center(
-      child: CupertinoButton(
-        padding: EdgeInsets.symmetric(vertical: 18, horizontal: 20),
-        color: Colors.pinkAccent,
-        borderRadius: BorderRadius.circular(5),
-        onPressed: ()=> _submit(),
-        child: Text("Inicia Sesión", style: TextStyle(fontSize: 20))
-      )
+    final boton = SizedBox(
+      child: Column(
+        children: <Widget>[
+          SizedBox(
+              width: double.infinity,
+              child: CupertinoButton(
+                  padding: EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+                  color: Colors.pinkAccent,
+                  borderRadius: BorderRadius.circular(5),
+                  onPressed: ()=> _submit(),
+                  child: Text("Inicia Sesión", style: TextStyle(fontSize: 20))
+              )
+          )
+        ],
+      ),
     );
 
     return Stack(

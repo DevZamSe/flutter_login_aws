@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttersecretchat/pages/login/login.dart';
 import 'package:fluttersecretchat/pages/login/registro.dart';
+import 'package:fluttersecretchat/pages/menu/menu.dart';
 
 void main() => runApp(MyApp());
 
@@ -17,7 +18,8 @@ class MyApp extends StatelessWidget {
       home: LoginPage(),
       routes: {
         'login': (context) => LoginPage(),
-        'registro': (context) => RegistroPage()
+        'registro': (context) => RegistroPage(),
+        'menu': (context) => Menu()
       },
     );
   }

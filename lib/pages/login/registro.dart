@@ -139,8 +139,8 @@ class _RegistroPageState extends State<RegistroPage> {
                 ),
 
                 Positioned(
-                  left: 15,
-                  top: 5,
+                  left: 10,
+                  top: 10,
                   child: SafeArea(
                     child: _atrasboton()
                   )
@@ -195,14 +195,21 @@ class _RegistroPageState extends State<RegistroPage> {
   }
 
   Widget _boton(Size size){
-    final boton = Center(
-        child: CupertinoButton(
-            padding: EdgeInsets.symmetric(vertical: 18, horizontal: 20),
-            color: Colors.pinkAccent,
-            borderRadius: BorderRadius.circular(5),
-            onPressed: ()=> _submit(),
-            child: Text("Registrarme", style: TextStyle(fontSize: 20))
-        )
+    final boton = SizedBox(
+      child: Column(
+        children: <Widget>[
+          SizedBox(
+              width: double.infinity,
+              child: CupertinoButton(
+                  padding: EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+                  color: Colors.pinkAccent,
+                  borderRadius: BorderRadius.circular(5),
+                  onPressed: ()=> _submit(),
+                  child: Text("Registrarme", style: TextStyle(fontSize: 20))
+              )
+          )
+        ],
+      ),
     );
 
     return Stack(
