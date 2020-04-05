@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttersecretchat/api/auth_api.dart';
 import 'package:fluttersecretchat/widgets/circle.dart';
 import 'package:fluttersecretchat/widgets/input_text.dart';
 
@@ -11,6 +12,9 @@ class RegistroPage extends StatefulWidget {
 
 class _RegistroPageState extends State<RegistroPage> {
   final _formKey = GlobalKey<FormState>();
+  final _authAPI = AuthAPI();
+  var _username = '', _email = '', _password = '';
+  var _isFetching = false;
 
   @override
   void initState() {
@@ -19,8 +23,22 @@ class _RegistroPageState extends State<RegistroPage> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
   }
 
-  _submit(){
-    _formKey.currentState.validate();
+  _submit() async{
+    if(_isFetching) return;
+    final isValid = _formKey.currentState.validate();
+    if(isValid){
+      setState(() {
+        _isFetching = true;
+      });
+     final isOk = await _authAPI.register(context, username: _username, email: _email, password: _password);
+     setState(() {
+       _isFetching = false;
+     });
+     if(isOk){
+       Navigator.pushNamed(context, 'menu');
+       print('Register');
+     }
+    }
   }
 
   @override
@@ -85,30 +103,36 @@ class _RegistroPageState extends State<RegistroPage> {
                                         children: <Widget>[
                                           InputText(
                                             label: 'Nombre Completo',
+                                            icon: Icon(Icons.account_circle),
                                             validator: (String text){
                                               if(RegExp(r'^[a-zA-Z0-9]+$').hasMatch(text)){
+                                                _username = text;
                                                 return null;
                                               }
                                               return 'Nombre Inválido';
                                             },
                                           ),
-                                          SizedBox(height: 14),
+                                          SizedBox(height: 17),
                                           InputText(
                                             inputType: TextInputType.emailAddress,
                                             label: 'Correo Electrónico',
+                                            icon: Icon(Icons.email),
                                             validator: (String text){
                                               if(text.contains("@")){
+                                                _email = text;
                                                 return null;
                                               }
                                               return 'Email Inválido';
                                             },
                                           ),
-                                          SizedBox(height: 14),
+                                          SizedBox(height: 17),
                                           InputText(
                                             label: 'Contraseña',
+                                            icon: Icon(Icons.vpn_key),
                                             isSecure: true,
                                             validator: (String text){
                                               if(text.isNotEmpty && text.length > 5){
+                                                _password = text;
                                                 return null;
                                               }
                                               return 'Contraseña Incorrecta';
@@ -118,7 +142,7 @@ class _RegistroPageState extends State<RegistroPage> {
                                       )
                                   )
                               ),
-                              SizedBox(height: size.height*0.08),
+                              SizedBox(height: size.height*0.06),
                               ConstrainedBox(
                                   constraints: BoxConstraints(
                                       maxWidth: 300,
@@ -144,7 +168,18 @@ class _RegistroPageState extends State<RegistroPage> {
                   child: SafeArea(
                     child: _atrasboton()
                   )
-                )
+                ),
+
+                _isFetching? Positioned.fill(
+                    child: Container(
+                      color: Colors.black45,
+                      child: Center(
+                        child: CupertinoActivityIndicator(
+                          radius: 15,
+                        ),
+                      ),
+                    )
+                ): Container()
 
               ],
             ),
@@ -225,7 +260,7 @@ class _RegistroPageState extends State<RegistroPage> {
       child: Column(
         children: <Widget>[
           Text(
-            "Hola otra vez\nBienvenido",
+            "Registrarse nunca ha\nsido tan sencillo",
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
           )

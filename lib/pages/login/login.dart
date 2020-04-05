@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttersecretchat/api/auth_api.dart';
 import 'package:fluttersecretchat/widgets/circle.dart';
 import 'package:fluttersecretchat/widgets/input_text.dart';
 
@@ -11,6 +12,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+  final _autAPI = AuthAPI();
+  var _email = '', _password = '';
+  var _isFetching = false;
 
   @override
   void initState() {
@@ -19,10 +23,20 @@ class _LoginPageState extends State<LoginPage> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
   }
 
-  _submit(){
-    _formKey.currentState.validate();
-    if(_formKey.currentState.validate()){
-      Navigator.pushNamed(context, 'menu');
+  _submit() async{
+    if(_isFetching) return;
+    final isValid = _formKey.currentState.validate();
+    if(isValid){
+      setState(() {
+        _isFetching = true;
+      });
+      final isOk = await _autAPI.login(context, email: _email, password: _password);
+      setState(() {
+        _isFetching = false;
+      });
+      if(isOk){
+        Navigator.pushNamed(context, 'menu');
+      }
     }
   }
 
@@ -70,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                         Column(
                           children: <Widget>[
                             _iconWidget(size),
-                            SizedBox(height: 15),
+                            SizedBox(height: 20),
                             _text()
                           ]
                         ),
@@ -89,8 +103,10 @@ class _LoginPageState extends State<LoginPage> {
                                     InputText(
                                       inputType: TextInputType.emailAddress,
                                       label: 'Correo Electrónico',
+                                      icon: Icon(Icons.email),
                                       validator: (String text){
                                         if(text.contains("@")){
+                                          _email = text;
                                           return null;
                                         }
                                         return 'Email Inválido';
@@ -99,9 +115,11 @@ class _LoginPageState extends State<LoginPage> {
                                     SizedBox(height: 30),
                                     InputText(
                                       label: 'Contraseña',
+                                      icon: Icon(Icons.vpn_key),
                                       isSecure: true,
                                       validator: (String text){
                                         if(text.isNotEmpty && text.length > 5){
+                                          _password = text;
                                           return null;
                                         }
                                         return 'Contraseña Incorrecta';
@@ -127,7 +145,18 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   )
                 )
-              )
+              ),
+
+              _isFetching? Positioned.fill(
+                  child: Container(
+                    color: Colors.black45,
+                    child: Center(
+                      child: CupertinoActivityIndicator(
+                        radius: 15,
+                      ),
+                    ),
+                  )
+              ): Container()
 
             ],
           ),
