@@ -4,16 +4,21 @@ import 'package:fluttersecretchat/pages/menu/pages/inicio.dart';
 import 'package:fluttersecretchat/pages/menu/pages/maps.dart';
 import 'package:fluttersecretchat/pages/menu/pages/perfil.dart';
 
+import 'package:fluttersecretchat/pages/menu/pages/scan.dart';
+
+
 class Menu extends StatefulWidget {
   @override
   _MenuState createState() => _MenuState();
 }
 
 class _MenuState extends State<Menu> {
+
   int _page;
   final Inicio _inicio = Inicio();
   final Maps _maps = Maps();
   final Perfil _perfil = Perfil();
+  final Scan _scan = Scan();
 
   @override
   void initState() {
@@ -39,6 +44,9 @@ class _MenuState extends State<Menu> {
       case 2:
         return _perfil;
         break;
+      case 3:
+        return _scan;
+        break;
       default:
         return new Container(
             child: new Center(
@@ -50,12 +58,11 @@ class _MenuState extends State<Menu> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: ()=> Navigator.pushNamed(context, 'scan'),
         child: Icon(Icons.center_focus_weak),
         backgroundColor: Colors.red,
       ),

@@ -76,6 +76,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_secure_storage:
+    dependency: "direct main"
+    description:
+      name: flutter_secure_storage
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.3.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -102,6 +109,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.4"
+  majascan:
+    dependency: "direct main"
+    description:
+      name: majascan
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.6"
+  mapbox_gl:
+    dependency: "direct main"
+    description:
+      name: mapbox_gl
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.5"
   matcher:
     dependency: transitive
     description:

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttersecretchat/api/auth_api.dart';
+import 'package:fluttersecretchat/utils/responsive.dart';
 import 'package:fluttersecretchat/widgets/circle.dart';
 import 'package:fluttersecretchat/widgets/input_text.dart';
 
@@ -19,7 +20,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
   }
 
@@ -42,8 +42,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-
     final size = MediaQuery.of(context).size;
+    final responsive = Responsive(context);
 
     return Scaffold(
       body: GestureDetector(
@@ -190,6 +190,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _boton(Size size){
+    final responsive = Responsive(context);
     final boton = SizedBox(
       child: Column(
         children: <Widget>[
@@ -200,7 +201,7 @@ class _LoginPageState extends State<LoginPage> {
                   color: Colors.pinkAccent,
                   borderRadius: BorderRadius.circular(5),
                   onPressed: ()=> _submit(),
-                  child: Text("Inicia Sesión", style: TextStyle(fontSize: 20))
+                  child: Text("Inicia Sesión", style: TextStyle(fontSize: responsive.ip(2.5)))
               )
           )
         ],
