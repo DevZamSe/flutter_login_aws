@@ -6,6 +6,8 @@ import 'package:fluttersecretchat/pages/menu/menu.dart';
 import 'package:fluttersecretchat/pages/menu/pages/inicio.dart';
 import 'package:fluttersecretchat/pages/menu/pages/maps.dart';
 import 'package:fluttersecretchat/pages/menu/pages/scan.dart';
+import 'package:fluttersecretchat/utils/themechanger.dart';
+import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,12 +15,22 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    return ChangeNotifierProvider<ThemeChanger>(
+      builder: (_) => ThemeChanger(ThemeData.dark()),
+      child: new MaterialAppWithTheme(),
+    );
+  }
+}
+
+class MaterialAppWithTheme extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeChanger>(context);
+
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.pink,
-      ),
+      theme: theme.getTheme(),
       home: SplashPage(),
       routes: {
         'login': (context) => LoginPage(),
@@ -31,3 +43,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+

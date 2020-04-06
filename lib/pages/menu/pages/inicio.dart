@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluttersecretchat/utils/themechanger.dart';
+import 'package:provider/provider.dart';
 
 class Inicio extends StatefulWidget {
   @override
@@ -8,14 +10,17 @@ class Inicio extends StatefulWidget {
 class _InicioState extends State<Inicio> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Text('Inicio')
-        ],
-      )
+    ThemeChanger _themeChanger = Provider.of<ThemeChanger>(context);
+
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('¿Que tema es?')
+          ],
+        ),
+      ),
     );
   }
 }
