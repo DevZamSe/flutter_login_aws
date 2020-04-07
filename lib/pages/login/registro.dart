@@ -205,7 +205,7 @@ class _RegistroPageState extends State<RegistroPage> {
   }
 
   Widget _textoRegistro(){
-    final texto1 = Text('Tienes cuenta', style: TextStyle(fontSize: 16, color: Colors.black54));
+    final texto1 = Text('Tienes cuenta', style: TextStyle(fontSize: 16));
     final boton = CupertinoButton(
       onPressed: () => Navigator.pop(context),
       child: Text('Inicia Sesión', style: TextStyle(fontSize: 16, color: Colors.pinkAccent)),

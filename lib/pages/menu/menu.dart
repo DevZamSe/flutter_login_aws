@@ -109,14 +109,13 @@ class _MenuState extends State<Menu> {
                 color: Colors.black,
               ),
               activeIcon: Icon(
-                Icons.settings,
+                Icons.menu,
                 color: Colors.green,
               ),
               title: Text('Perfil'))
         ],
       ),
       body: Container(
-        color: Colors.white,
         child: Center(
             child: _showPage
         ),

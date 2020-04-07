@@ -166,7 +166,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _textoRegistro(){
-    final texto1 = Text('Nuevo aquí', style: TextStyle(fontSize: 16, color: Colors.black54));
+    final texto1 = Text('Nuevo aquí', style: TextStyle(fontSize: 16));
     final boton = CupertinoButton(
       onPressed: () => Navigator.pushNamed(context, 'registro'),
       child: Text('Registrate', style: TextStyle(fontSize: 16, color: Colors.pinkAccent)),
