@@ -6,7 +6,7 @@
          additional functionality it is fine to subclass or reimplement
          FlutterApplication and put your custom class here. -->
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
@@ -32,6 +32,6 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-        <meta-data android:name="com.mapbox.token" android:value="pk.eyJ1IjoiYWJlbGhlcmVkaWEiLCJhIjoiY2s4MG04aDlyMDJpNTNrcjJ6Y2huazVmZSJ9.7STtjX9SG4brvDGwHChAjQ" />
+        <meta-data android:name="com.mapbox.token" android:value="pk.eyJ1IjoiZGV2emFtc2UiLCJhIjoiY2s4cTBpMDU3MDBkNjNucG5jMWYwYWU0ZSJ9.JFsJtM_VwVE4BZ3Ra9vF6w" />
     </application>
 </manifest>

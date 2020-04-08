@@ -56,11 +56,12 @@ class _PerfilState extends State<Perfil> {
       width: size.width*0.85,
       height: size.height*0.1,
       decoration: BoxDecoration(
-          color: Colors.blueAccent,
+          color: Colors.red,
           borderRadius: BorderRadius.circular(size.height*0.1)
       ),
       child: Row(
         children: <Widget>[
+          SizedBox(width: 20),
           ConstrainedBox(
             constraints: BoxConstraints(
               maxWidth: 50,
@@ -76,20 +77,23 @@ class _PerfilState extends State<Perfil> {
             width: size.width*0.42,
             child: Center(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text('Nombre'),
+                  Text('DevZamSe'),
                   SizedBox(height: 5),
-                  Text('Correo')
+                  Text('nilovila@e-quipu.pe')
                 ],
               ),
             ),
           ),
+          SizedBox(width: 5),
           Center(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text('Salir')
+                Image.asset('man.png')
               ],
             ),
           )
@@ -137,18 +141,38 @@ class _PerfilState extends State<Perfil> {
               }
           ),
           SizedBox(height: 10),
-          Text('Cuenta', style: TextStyle(fontSize: 20)),
+          Container(
+            height: 50,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('Cuenta', style: TextStyle(fontSize: 20)),
+              ],
+            ),
+          ),
           SizedBox(height: 5),
-          Text('País'),
+          Container(
+            height: 30,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('País', style: TextStyle(fontSize: 20)),
+              ],
+            ),
+          ),
           SizedBox(height: 10),
-          Text('General', style: TextStyle(fontSize: 20)),
+          Container(
+            height: 50,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('General', style: TextStyle(fontSize: 20)),
+              ],
+            ),
+          ),
           SizedBox(height: 5),
           Text('Touch ID'),
           Text('Privacidad'),
-          SizedBox(height: 10),
-          Text('Social', style: TextStyle(fontSize: 20)),
-          SizedBox(height: 5),
-          Text('Facebook'),
         ],
       )
     );
