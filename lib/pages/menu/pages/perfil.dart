@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttersecretchat/utils/dialogs.dart';
+import 'package:fluttersecretchat/utils/session.dart';
 import 'package:fluttersecretchat/utils/themechanger.dart';
 import 'package:provider/provider.dart';
 
@@ -11,6 +13,23 @@ class Perfil extends StatefulWidget {
 class _PerfilState extends State<Perfil> {
   bool _value = false;
   String _text = 'Modo Noche Activado';
+
+  _onExit() {
+    Dialogs.confirm(
+      context,
+      title: 'Cerrar Sesión',
+      message: 'Estas seguro de salir',
+      onCancel: () {
+        Navigator.pop(context);
+      },
+      onConfirm: () async {
+        Navigator.pop(context);
+        Session session = Session();
+        await session.clear();
+        Navigator.pushNamedAndRemoveUntil(context, 'login', (_) => false);
+      }
+    );
+  }
 
   void _onChanged(bool value, ThemeChanger themeChanger){
     setState(() {
@@ -156,7 +175,7 @@ class _PerfilState extends State<Perfil> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text('País', style: TextStyle(fontSize: 20)),
+                Text('País', style: TextStyle(fontSize: 17)),
               ],
             ),
           ),
@@ -171,8 +190,39 @@ class _PerfilState extends State<Perfil> {
             ),
           ),
           SizedBox(height: 5),
-          Text('Touch ID'),
-          Text('Privacidad'),
+          SwitchListTile(
+              title: Text('Iniciar Sesión con huella'),
+              secondary: Icon(Icons.fingerprint),
+              activeColor: Colors.red,
+              value: _value,
+              onChanged: (bool value){
+                _onChanged(value, _themeChanger);
+              }
+          ),
+          SwitchListTile(
+              title: Text('Ubicación'),
+              secondary: Icon(Icons.my_location),
+              activeColor: Colors.red,
+              value: _value,
+              onChanged: (bool value){
+                _onChanged(value, _themeChanger);
+              }
+          ),
+          SwitchListTile(
+              title: Text('Enviar Estadisticas'),
+              secondary: Icon(Icons.sentiment_very_dissatisfied),
+              activeColor: Colors.red,
+              value: _value,
+              onChanged: (bool value){
+                _onChanged(value, _themeChanger);
+              }
+          ),
+          CupertinoButton(
+            child: Text('Cerrar Sesión', style: TextStyle(fontSize: 16, color: Colors.white)),
+            onPressed: (){
+              _onExit();
+            }
+          )
         ],
       )
     );

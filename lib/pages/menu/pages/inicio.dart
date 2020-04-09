@@ -17,7 +17,7 @@ class _InicioState extends State<Inicio> {
         child: Column(
           children: <Widget>[
             SizedBox(height: 20),
-            imageCarousel,
+            imageCarousel(size),
             SizedBox(height: 12),
             Row(
               children: <Widget>[
@@ -39,60 +39,63 @@ class _InicioState extends State<Inicio> {
     );
   }
 
-  Widget imageCarousel = new Container(
+  Widget imageCarousel(Size size){
+    return Container(
       child: CarouselSlider(
-        height: 380,
+        height: size.height*0.47,
         autoPlay: true,
         enlargeCenterPage: true,
         aspectRatio: 2.0,
         pauseAutoPlayOnTouch: Duration(milliseconds: 800),
         items: [
-          'http://pic3.16pic.com/00/55/42/16pic_5542988_b.jpg',
-          'http://photo.16pic.com/00/38/88/16pic_3888084_b.jpg',
-          'http://pic3.16pic.com/00/55/42/16pic_5542988_b.jpg',
-          'http://photo.16pic.com/00/38/88/16pic_3888084_b.jpg'
+          'https://www.aithority.com/wp-content/uploads/2019/05/Endesa-taps-IBM-Watson-and-IBM-Cloud-to-deliver-superior-Customer-Service-through-its-AI-Contact-Center.jpg',
+          'https://especiales.realinstitutoelcano.org/coronavirus/img/cards/mapa-coronavirus.png',
+          'https://www.pngfind.com/pngs/m/598-5987542_grafico-slides-sin-logo-el-per-primero-hd.png'
         ].map((i) {
           return Builder(
             builder: (BuildContext context) {
               return Container(
-                  width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.symmetric(horizontal: 5.0),
-                  decoration: BoxDecoration(color: Colors.blueAccent),
-                  child: GestureDetector(
-                      child: Image.network(i, fit: BoxFit.fill),
-                      onTap: () {
-                        Navigator.push<Widget>(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ImageScreen(i),
-                          ),
-                        );
-                      }));
+                width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.symmetric(horizontal: 5.0),
+                decoration: BoxDecoration(color: Colors.blueAccent),
+                child: GestureDetector(
+                  child: Image.network(i, fit: BoxFit.fill),
+                  onTap: () {
+                    Navigator.push<Widget>(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ImageScreen(i),
+                      ),
+                    );
+                  }
+                )
+              );
             },
           );
         }).toList(),
       )
-  );
+    );
+  }
 
   Widget card(Size size){
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         Container(
-              margin: EdgeInsets.only(left: 10, top: 10),
-              height: size.height*0.158,
-              width: size.width*0.45,
-              decoration: BoxDecoration(
-                  color: Colors.blueAccent,
-                  borderRadius: BorderRadius.circular(10)
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Text('Card1')
-                ],
-              ),
-
+          margin: EdgeInsets.only(left: 10, top: 10),
+          height: size.height*0.158,
+          width: size.width*0.45,
+          decoration: BoxDecoration(
+              color: Colors.blueAccent,
+              borderRadius: BorderRadius.circular(10)
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text('Card1')
+            ],
+          ),
         )
       ],
     );
