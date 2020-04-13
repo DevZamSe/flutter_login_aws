@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttersecretchat/utils/dialogs.dart';
 import 'package:fluttersecretchat/utils/session.dart';
 import 'package:fluttersecretchat/utils/themechanger.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
 
 class Perfil extends StatefulWidget {
@@ -10,9 +11,14 @@ class Perfil extends StatefulWidget {
   _PerfilState createState() => _PerfilState();
 }
 
-class _PerfilState extends State<Perfil> {
+class _PerfilState extends State<Perfil>{
   bool _value = false;
+  bool _value2 = false;
   String _text = 'Modo Noche Activado';
+  final LocalAuthentication _localAuthentication = LocalAuthentication();
+  bool _hasFingerPrintSupport = false;
+  String _authorizedOrNot = "Not Authorized";
+  List<BiometricType> _availableBuimetricType = List<BiometricType>();
 
   _onExit() {
     Dialogs.confirm(
@@ -43,6 +49,67 @@ class _PerfilState extends State<Perfil> {
         _text = "Modo Noche Activado";
         print('error no');
       }
+    });
+  }
+
+  void _onFingerPrint(bool value2) async{
+    _authenticateMe();
+    setState(() {
+      _value2 = value2;
+      if(_value){
+        _getBiometricsSupport();
+        _getAvailableSupport();
+      } else{
+
+      }
+    });
+  }
+
+  Future<void> _getBiometricsSupport() async {
+    // 6. this method checks whether your device has biometric support or not
+    bool hasFingerPrintSupport = false;
+    try {
+      hasFingerPrintSupport = await _localAuthentication.canCheckBiometrics;
+    } catch (e) {
+      print(e);
+    }
+    if (!mounted) return;
+    setState(() {
+      _hasFingerPrintSupport = hasFingerPrintSupport;
+    });
+  }
+
+  Future<void> _getAvailableSupport() async {
+    // 7. this method fetches all the available biometric supports of the device
+    List<BiometricType> availableBuimetricType = List<BiometricType>();
+    try {
+      availableBuimetricType =
+      await _localAuthentication.getAvailableBiometrics();
+    } catch (e) {
+      print(e);
+    }
+    if (!mounted) return;
+    setState(() {
+      _availableBuimetricType = availableBuimetricType;
+    });
+  }
+
+  Future<void> _authenticateMe() async {
+    // 8. this method opens a dialog for fingerprint authentication.
+    //    we do not need to create a dialog nut it popsup from device natively.
+    bool authenticated = false;
+    try {
+      authenticated = await _localAuthentication.authenticateWithBiometrics(
+        localizedReason: "Authenticate for Testing", // message for dialog
+        useErrorDialogs: true,// show error in dialog
+        stickyAuth: true,// native process
+      );
+    } catch (e) {
+      print(e);
+    }
+    if (!mounted) return;
+    setState(() {
+      _authorizedOrNot = authenticated ? "Authorized" : "Not Authorized";
     });
   }
 
@@ -194,7 +261,7 @@ class _PerfilState extends State<Perfil> {
               title: Text('Iniciar Sesión con huella'),
               secondary: Icon(Icons.fingerprint),
               activeColor: Colors.red,
-              value: _value,
+              value: _value2,
               onChanged: (bool value){
                 _onChanged(value, _themeChanger);
               }
@@ -213,8 +280,8 @@ class _PerfilState extends State<Perfil> {
               secondary: Icon(Icons.sentiment_very_dissatisfied),
               activeColor: Colors.red,
               value: _value,
-              onChanged: (bool value){
-                _onChanged(value, _themeChanger);
+              onChanged: (bool value2){
+                _onFingerPrint(value2);
               }
           ),
           CupertinoButton(

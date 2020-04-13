@@ -1,5 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_circular_chart/flutter_circular_chart.dart';
+import 'package:flutter_sparkline/flutter_sparkline.dart';
 import 'package:fluttersecretchat/utils/SliderOnClick.dart';
 
 class Inicio extends StatefulWidget {
@@ -8,6 +10,21 @@ class Inicio extends StatefulWidget {
 }
 
 class _InicioState extends State<Inicio> {
+  var data = [0.0, 1.0, 1.5, 2.0];
+  var data1 = [0.0,-2.0,3.5,-2.0];
+
+  List<CircularStackEntry> circularData = <CircularStackEntry>[
+    new CircularStackEntry(
+      <CircularSegmentEntry>[
+        new CircularSegmentEntry(700.0, Color(0xff4285F4), rankKey: 'Q1'),
+        new CircularSegmentEntry(1000.0, Color(0xfff3af00), rankKey: 'Q2'),
+        new CircularSegmentEntry(1800.0, Color(0xffec3337), rankKey: 'Q3'),
+        new CircularSegmentEntry(1000.0, Color(0xff40b24b), rankKey: 'Q4'),
+      ],
+      rankKey: 'Quarterly Profits',
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
 
@@ -23,12 +40,12 @@ class _InicioState extends State<Inicio> {
               children: <Widget>[
                 card(size),
                 SizedBox(width: size.width*0.01),
-                card(size)
+                card1(size)
               ],
             ),
             Row(
               children: <Widget>[
-                card(size),
+                card2(size),
                 SizedBox(width: size.width*0.01),
                 card(size)
               ],
@@ -93,11 +110,81 @@ class _InicioState extends State<Inicio> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Text('Card1')
+              _chart()
             ],
           ),
         )
       ],
     );
   }
+
+  Widget card1(Size size){
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.all(1.0),
+          child: Sparkline(
+            data: data,
+            lineColor: Color(0xffff6101),
+            pointsMode: PointsMode.all,
+            pointSize: 8.0,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget card2(Size size){
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.all(1.0),
+          child: new Sparkline(
+            data: data1,
+            fillMode: FillMode.below,
+            fillGradient: new LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Colors.amber[800], Colors.amber[200]],
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _chart(){
+    return Material(
+      color: Colors.white,
+      elevation: 14.0,
+      borderRadius: BorderRadius.circular(24.0),
+      shadowColor: Color(0x802196F3),
+      child: Center(
+        child:Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment:MainAxisAlignment.center,
+            children: <Widget>[
+              Column(
+                mainAxisAlignment:MainAxisAlignment.center,
+                children: <Widget>[
+
+                  Padding(
+                    padding:EdgeInsets.all(8.0),
+                    child:AnimatedCircularChart(
+                      size: const Size(90.0, 90.0),
+                      initialChartData: circularData,
+                      chartType: CircularChartType.Pie,
+                    ),
+                  ),
+
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
 }
