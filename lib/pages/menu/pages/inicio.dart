@@ -30,26 +30,33 @@ class _InicioState extends State<Inicio> {
 
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SafeArea(
+      body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             SizedBox(height: 20),
             imageCarousel(size),
             SizedBox(height: 12),
-            Row(
-              children: <Widget>[
-                card(size),
-                SizedBox(width: size.width*0.01),
-                card1(size)
-              ],
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: <Widget>[
+                  card(size),
+                  SizedBox(width: size.width*0.01),
+                  card1(size)
+                ],
+              ),
             ),
-            Row(
-              children: <Widget>[
-                card2(size),
-                SizedBox(width: size.width*0.01),
-                card(size)
-              ],
-            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child:
+              Row(
+                children: <Widget>[
+                  card2(size),
+                  SizedBox(width: size.width*0.01),
+                  card(size)
+                ],
+              )
+            )
           ],
         )
       ),
